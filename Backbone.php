@@ -6,40 +6,6 @@
 
 /**
  * Initialize Backbone.js / Marionette applications in Yii
- *
- * This implementation is designed to work with Backbone applications using Marionette.
- *
- * Set this as an application component and use as follows:
- * <code>
- * // In your component configuration
- * 'backbone' => array(
- *   'class' => 'path.to.Backbone',
- *   'appPath' => 'path.to.backbone.app.root.dir',
- *   'require' => array(
- *     // requireJs configuration
- *   ),
- * ),
- * </code>
- * <code>
- * // In your app.js file:
- * define([
- *   'jquery',
- *   'lodash',
- *   'Backbone',
- *   'Marionette',
- *   'options',
- * ], function ($, _, Backbone, Marionette, options) {
- *   var App = Backbone.Marionette.Application();
- *   App.addInitializer(options);
- *   App.start(options);
- * });
- * </code>
- * <code>
- * // In your controller
- * Yii::app()->backbone->app = 'MyApp';
- * Yii::app()->backbone->options = array( app data );
- * Yii::app()->backbone->start();
- * </code>
  */
 class Backbone extends CApplicationComponent
 {

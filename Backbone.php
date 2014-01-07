@@ -24,9 +24,17 @@ class Backbone extends CApplicationComponent
 
   /**
    * RequireJS configuration
+   * JSON-encoded and passed to require.config().
    * @var array
    */
   public $require = array();
+
+  /**
+   * Url pointing to your require.js file
+   * If not set, defaults to the 'require.js' file in your Backbone app's root directory.
+   * @var string
+   */
+  public $requireJsUrl;
 
   /**
    * Name of the require module containing app options
@@ -44,13 +52,13 @@ class Backbone extends CApplicationComponent
   public $appPath = 'application.scripts.backbone';
 
   /**
-   * Namespace prefix for the require configuration and app options
+   * scriptPrefix prefix for the require configuration and app options
    * Options and require configuration are registered with CClientScript using the names:
-   * - "{$namespace}:options"
-   * - "{$namespace}:require"
+   * - "{$scriptPrefix}:options"
+   * - "{$scriptPrefix}:require"
    * @var string
    */
-  public $namespace = 'Backbone:App';
+  public $scriptPrefix = 'Backbone:App';
 
   /**
    * Registers the Backbone app scripts
@@ -68,7 +76,7 @@ class Backbone extends CApplicationComponent
     if ($require) {
       $require = CJSON::encode($this->require);
       Yii::app()->clientScript->registerScript(
-        $this->namespace.':require',
+        "{$this->scriptPrefix}:require",
         "require.config($require);",
         CClientScript::POS_HEAD
       );
@@ -78,7 +86,7 @@ class Backbone extends CApplicationComponent
     $options = CJSON::encode($this->options);
     $optionsModuleName = CJSON::encode($this->optionsModuleName);
     Yii::app()->clientScript->registerScript(
-      $this->namespace.':options',
+      "{$this->scriptPrefix}:options",
       "define($optionsModuleName,[],function(){return $options;});",
       CClientScript::POS_HEAD
     );
@@ -124,10 +132,17 @@ class Backbone extends CApplicationComponent
     if (substr($main, 0, -3) != '.js')  { $main .= '.js'; }
     if (substr($main, 0, 1) != '/')     { $main = '/' . $main; }
 
+    // Where to look for RequireJs?
+    if ($this->requireJsUrl) {
+      $requireJsUrl = $this->requireJsUrl;
+    } else {
+      $requireJsUrl = $this->publishedUrl . '/require.js';
+    }
+
     // Require.js is responsible for loading dependencies and your
     // initialization script.
     Yii::app()->clientScript->registerScriptFile(
-      $this->publishedUrl . '/require.js',
+      $requireJsUrl,
       CClientScript::POS_HEAD,
       array('data-main' => $this->publishedUrl . $main)
     );

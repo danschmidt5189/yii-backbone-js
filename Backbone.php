@@ -6,12 +6,14 @@
 
 /**
  * Initialize Backbone.js / Marionette applications in Yii
- * 
- * Running an app:
+ *
+ * Running your Backbone app:
  * <code>
- * Yii::app()->backbone->app = "MyApp";
+ * <?php
+ * Yii::app()->backbone->app = 'MyApp';
  * Yii::app()->backbone->options = $initOptions;
  * Yii::app()->backbone->start();
+ * ?>
  * </code>
  */
 class Backbone extends CApplicationComponent

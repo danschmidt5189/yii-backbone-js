@@ -122,7 +122,7 @@ class Backbone extends CApplicationComponent
     }
 
     // Configure require.js
-    if ($require) {
+    if ($this->require) {
       $require = CJSON::encode($this->require);
       Yii::app()->clientScript->registerScript(
         "{$this->scriptPrefix}:require",

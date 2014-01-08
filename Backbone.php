@@ -15,47 +15,84 @@
  * Yii::app()->backbone->start();
  * ?>
  * </code>
+ *
+ * // ========================================================= //
+ * // DO NOT PUT SENSITIVE DATA IN YOUR BACKBONE APP DIRECTORY! //
+ * // ========================================================= //
  */
 class Backbone extends CApplicationComponent
 {
   /**
-   * Name of the requirejs file used to load the application
+   * Backbone app filename
+   *
+   * This value is set as the 'data-main' attribute of the requireJs script
+   * and bootstraps your application. The '/' prefix and '.js' suffix will
+   * be added automatically, so the following are equivalent:
+   * - MyApp.js
+   * - /MyApp.js
+   * - MyApp
+   * - /MyApp
+   *
+   * Your app.js file should look something like this:
+   * <code>
+   * require([
+   *   "jquery",
+   *   "underscore",
+   *   "Backbone",
+   *   "Marionette",
+   *   "options",
+   * ], function ($, _, Backbone, Marionette, options) {
+   *   var MyApp = new Backbone.Marionette.Application();
+   *   MyApp.addInitializer();
+   *   MyApp.start(options);
+   * });
+   * </code>
    * @var string
    */
   public $app;
 
   /**
-   * JavaScript options registered as a global object on the page
-   * This will be JSON-encoded using CJSON::encode().
+   * Marionette app options
+   *
+   * This will be JSON-encoded using CJSON::encode() and defined as a require module
+   * named Backbone::$optionsModuleName. This means you can require the options in
+   * your application file's require() statement.
+   *
    * @var array
    */
   public $options = array();
 
   /**
    * RequireJS configuration
-   * JSON-encoded and passed to require.config().
+   *
+   * If set, this value will be JSON-encoded and passed to require.config().
+   *
    * @var array
    */
   public $require = array();
 
   /**
-   * Url pointing to your require.js file
-   * If not set, defaults to the 'require.js' file in your Backbone app's root directory.
+   * require.js url
+   *
+   * If not set, this assumes your file lives at "{Backbone::$appPath}/require.js".
+   * As with all files in the Backbone::$appPath directory, this file is published in Backbone::init().
+   *
    * @var string
    */
   public $requireJsUrl;
 
   /**
-   * Name of the require module containing app options
-   * This is published dynamically at runtime and added to the page
-   * using data sourced from Backbone::$options.
+   * App options module name
+   *
    * @var string
    */
   public $optionsModuleName = 'options';
 
   /**
    * Alias to the directory containing your Backbone application
-   * This is published in Backbone::init().
+   *
+   * This entire directory is published in Backbone::init().
+   *
    * @var string
    */
   public $appPath = 'application.scripts.backbone';
@@ -71,6 +108,7 @@ class Backbone extends CApplicationComponent
 
   /**
    * Registers the Backbone app scripts
+   *
    * @see Backbone::$require, the requirejs configuration
    * @see Backbone::$options, app options
    * @see Backbone::$optionsModuleName, name of the require module containing options

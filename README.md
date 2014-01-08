@@ -1,7 +1,7 @@
 Yii + Backbone.js
 ==============
 
-Quickly integrate Backbone, Marionette, and RequireJS in your Yii application. See `config.php` to get up and running immediately.
+Quickly integrate Backbone, Marionette, and RequireJS in your Yii application. The default configuration gets you up and running immediately using [cdnjs](http://cdnjs.com/).
 
 (Note: This component is really more of a RequireJS quick-start than anything else.)
 

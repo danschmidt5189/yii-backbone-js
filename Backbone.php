@@ -5,6 +5,12 @@
  */
 
 /**
+ * // ========================================================= //
+ * // DO NOT PUT SENSITIVE DATA IN YOUR BACKBONE APP DIRECTORY! //
+ * // ========================================================= //
+ */
+
+/**
  * Initialize Backbone.js / Marionette applications in Yii
  *
  * Running your Backbone app:
@@ -15,10 +21,6 @@
  * Yii::app()->backbone->start();
  * ?>
  * </code>
- *
- * // ========================================================= //
- * // DO NOT PUT SENSITIVE DATA IN YOUR BACKBONE APP DIRECTORY! //
- * // ========================================================= //
  */
 class Backbone extends CApplicationComponent
 {

@@ -65,13 +65,39 @@ class Backbone extends CApplicationComponent
   public $options = array();
 
   /**
+   * Alias to the directory containing your Backbone application
+   *
+   * This entire directory is published in Backbone::init().
+   *
+   * @var string
+   */
+  public $appPath = 'application.scripts.backbone';
+
+  /**
    * RequireJS configuration
    *
    * If set, this value will be JSON-encoded and passed to require.config().
    *
    * @var array
    */
-  public $require = array();
+  public $require = array(
+    'paths' => array(
+      'jquery' => 'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery',
+      'underscore' => 'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min',
+      'backbone' => 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min',
+      'marionette' => '//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.4.1-bundled/backbone.marionette.min',
+    ),
+    'shim' => array(
+      'backbone' => array(
+        'deps' => array('jquery', 'underscore'),
+        'exports' => 'Backbone',
+      ),
+      'marionette'  => array(
+        'deps'  => array('jquery', 'underscore', 'backbone'),
+        'exports' => 'Marionette',
+      ),
+    ),
+  );
 
   /**
    * require.js url
@@ -81,7 +107,7 @@ class Backbone extends CApplicationComponent
    *
    * @var string
    */
-  public $requireJsUrl;
+  public $requireJsUrl = '//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js';
 
   /**
    * App options module name
@@ -89,15 +115,6 @@ class Backbone extends CApplicationComponent
    * @var string
    */
   public $optionsModuleName = 'options';
-
-  /**
-   * Alias to the directory containing your Backbone application
-   *
-   * This entire directory is published in Backbone::init().
-   *
-   * @var string
-   */
-  public $appPath = 'application.scripts.backbone';
 
   /**
    * scriptPrefix prefix for the require configuration and app options
